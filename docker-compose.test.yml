@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+
+  postgres:
+    container_name: pg_payment_test
+    ports:
+      - '${POSTGRES_PORT}:5432'
+
+  redis:
+    container_name: redis_payment_test
+    ports:
+      - '${REDIS_PORT}:6379'
+
+  kafka:
+    container_name: kafka_payment_test
+    ports:
+      - '${KAFKA_PORT}:9092'

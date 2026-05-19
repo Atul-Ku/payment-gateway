@@ -1,20 +1,34 @@
-# Ignore node modules and build artifacts
-node_modules
-dist
-build
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build output
+dist/
+build/
 coverage
-logs
+
+# Logs
+logs/
 *.log
+npm-debug.log*
+pnpm-debug.log*
+
+# OS generated files
 *.tmp
 *.bak
 .DS_Store
 .idea
 .vscode
-*.sublime-project
-*.sublime-workspace
 *.swp
-.env
-.env.local
-.env.development
+
+# Environment files — NEVER commit these
+.env.dev
 .env.test
-.env.production
+.env.prod
+.env.local
+*.env.local
+
+# Docker volumes (if accidentally created locally)
+postgres-data/
+redis-data/

@@ -3,11 +3,21 @@
   "version": "1.0.0",
   "private": true,
   "packageManager": "pnpm@10.33.4",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
-    "infra:up": "docker-compose up",
-    "infra:down": "docker-compose down",
-    "infra:logs": "docker-compose logs -f",
-    "infra:reset": "docker-compose down -v"
+    "dev:up":      "docker-compose -f docker-compose.yml -f docker-compose.dev.yml --env-file .env.dev up",
+    "dev:down":    "docker-compose -f docker-compose.yml -f docker-compose.dev.yml down",
+    "dev:logs":    "docker-compose -f docker-compose.yml -f docker-compose.dev.yml logs -f",
+    "dev:reset":   "docker-compose -f docker-compose.yml -f docker-compose.dev.yml down -v",
+
+    "test:up":     "docker-compose -f docker-compose.yml -f docker-compose.test.yml --env-file .env.test up",
+    "test:down":   "docker-compose -f docker-compose.yml -f docker-compose.test.yml down",
+    "test:reset":  "docker-compose -f docker-compose.yml -f docker-compose.test.yml down -v",
+
+    "prod:up":     "docker-compose -f docker-compose.yml -f docker-compose.prod.yml --env-file .env.prod up",
+    "prod:down":   "docker-compose -f docker-compose.yml -f docker-compose.prod.yml down"
   },
   "devDependencies": {
     "typescript": "^5.3.3"
