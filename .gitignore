@@ -1,0 +1,20 @@
+# Ignore node modules and build artifacts
+node_modules
+dist
+build
+coverage
+logs
+*.log
+*.tmp
+*.bak
+.DS_Store
+.idea
+.vscode
+*.sublime-project
+*.sublime-workspace
+*.swp
+.env
+.env.local
+.env.development
+.env.test
+.env.production
