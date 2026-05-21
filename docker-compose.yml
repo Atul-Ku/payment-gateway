@@ -32,22 +32,29 @@ services:
     image: confluentinc/cp-kafka:7.9.0
     restart: unless-stopped
     environment:
-      # ── KRaft settings ───────────────────
+      # ── KRaft mode ───────────────────────────────────────────
       KAFKA_NODE_ID: 1
       KAFKA_PROCESS_ROLES: broker,controller
       KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:29093
-      # ── Listeners ────────────────────────
-      # PLAINTEXT     → services inside Docker network
-      # EXTERNAL      → your Mac (localhost)
-      # CONTROLLER    → KRaft internal only
-      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:29092,EXTERNAL://0.0.0.0:9092,CONTROLLER://0.0.0.0:29093
+
+      # ── Listeners ────────────────────────────────────────────
+      # PLAINTEXT  → Docker internal (other containers), bind to kafka hostname
+      # EXTERNAL   → your Mac (localhost), bind to all interfaces via 0.0.0.0
+      # CONTROLLER → KRaft internal only, bind to kafka hostname
+      KAFKA_LISTENERS: PLAINTEXT://kafka:29092,EXTERNAL://0.0.0.0:9092,CONTROLLER://kafka:29093
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,EXTERNAL://localhost:${KAFKA_PORT}
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT,CONTROLLER:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
-      # ── KRaft cluster ID ─────────────────
+
+      # ── Cluster identity ─────────────────────────────────────
+      # Must be a valid base64 UUID — do not change after first run
+      # or Kafka will refuse to start (data mismatch)
       CLUSTER_ID: ${KAFKA_CLUSTER_ID}
-      # ── General ──────────────────────────
+
+      # ── Single node settings ─────────────────────────────────
+      # All set to 1 because we have only one broker
+      # Production would use 3 for fault tolerance
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
