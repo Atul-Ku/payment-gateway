@@ -76,3 +76,4 @@ networks:
 volumes:
   pg_data:
   redis_data:
+  kafka_data:
